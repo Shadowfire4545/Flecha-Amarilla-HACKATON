@@ -1,0 +1,123 @@
+<nav class="bg-[#f8f9fa] h-16 xl:flex items-center justify-between px-10">
+  <!-- Logo of the application -->
+  <img [matMenuTriggerFor]="popAplication" src="/sanmina/sanmina-100x56.png"
+    class="h-14 object-cover cursor-pointer pt-1 xl:pt-0" alt="" />
+
+  <div id="menu"
+    class="w-0 invisible xl:visible px-2 py-14 xl:py-0 xl:px-0 xl:flex items-center xl:space-x-2 fixed right-0 top-0 h-full bg-white xl:w-auto xl:bg-transparent xl:relative transition-all duration-300 ease-in-out z-[2]">
+    <div class="flex flex-col xl:flex-row gap-2">
+      @for (item of menu(); track item.id) {
+      @if (item.idFatherMenu === null) {
+      <div class="relative group">
+        <button matRipple [routerLink]="item.link"
+          routerLinkActive="bg-gray-500 bg-opacity-20 rounded-lg text-gray-600"
+          class="text-gray-500 hover:text-gray-600 px-4 py-2 transition-all hover:bg-gray-500 hover:bg-opacity-10 hover:rounded-lg space-x-2 flex items-center">
+          @if (item.icon) {
+          <fa-icon [icon]="item.icon" />
+          }
+          <span>{{ item.name }}</span>
+        </button>
+
+        <!-- Add invisible bridge to maintain hover -->
+        <div class="absolute w-full h-2 bg-transparent"></div>
+
+        <!-- Dropdown menu with hover bridge -->
+        <div
+          class="absolute mt-2 left-0 w-48 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-150 bg-white shadow-lg rounded-lg z-10">
+          @for (child of menu(); track child.id) {
+          @if (child.idFatherMenu?.toString() === item.id.toString()) {
+          <button matRipple [routerLink]="child.link" routerLinkActive="bg-gray-500 bg-opacity-20"
+            class="w-full text-left text-gray-500 hover:text-gray-600 px-4 py-2 transition-all hover:bg-gray-500 hover:bg-opacity-10 space-x-2 flex items-center rounded-lg">
+            @if (child.icon) {
+            <fa-icon [icon]="child.icon" />
+            }
+            <span>{{ child.name }}</span>
+          </button>
+          }
+          }
+        </div>
+      </div>
+      }
+      }
+    </div>
+
+    <!-- User iformation -->
+    <div class="xl:flex items-center xl:space-x-4 xl:px-0 py-3 space-y-4 xl:space-y-0">
+      <div class="flex space-x-2 items-center pl-2.5">
+        <img [matMenuTriggerFor]="userProfile" [src]="user?.googleImage ? user?.googleImage : userImage()"
+          class="h-9 w-9 cursor-pointer rounded-full" />
+        <span class="text-gray-500 uppercase text-xs">{{
+          user?.userName
+          }}</span>
+      </div>
+      <button (click)="logout()" matRipple
+        class="text-white hover:bg-[#ff6262]/80 bg-[#ff6262] border-b-4 border border-[#e54a4a] transition-all rounded-full h-10 w-full xl:w-10 inline-block">
+        <fa-icon [icon]="faPowerOff" />
+      </button>
+    </div>
+  </div>
+
+  <!-- Appears only in mobile, to toggle menu sidebar -->
+  <button (click)="toggleMenu()"
+    class="text-gray-500 text-xl absolute right-2 top-2.5 hover:text-gray-600 px-4 py-2 xl:hidden transition-all hover:bg-gray-500 hover:bg-opacity-10 hover:rounded-lg space-x-2 z-[3]">
+    <fa-icon [icon]="faBars" />
+  </button>
+</nav>
+
+<!-- Sites and projects selector -->
+<div
+  class="bg-[#505760] h-8 shadow flex justify-end items-center px-5 xl:px-12 space-x-5 border-t-[3px] border-red-600">
+  <button matRipple [matMenuTriggerFor]="siteSelector" class="flex items-center space-x-1 text-gray-200 text-sm">
+    <span>{{ siteSelected()?.name }}</span>
+    <fa-icon [icon]="faArrowDown" />
+  </button>
+</div>
+
+<!--* user profile -->
+<mat-menu #userProfile class="mt-2" xPosition="before">
+  <div class="p-2 bg-gray-300 text-gray-600 -mt-2">User information</div>
+  <div class="p-2 flex space-x-4 items-center">
+    <img [src]="user?.googleImage ? user?.googleImage : userImage()" alt="User profile"
+      class="h-16 w-16 rounded-full border-2 border-[#e54a4a] " />
+    <div>
+      <p class="text-sm text-gray-600">Name: <span class="text-gray-500">{{user?.name + " " + user?.lastName}}</span>
+      </p>
+      <p class="text-sm text-gray-600">Employee number: <span class="text-gray-500">{{user?.employeeNumber}}</span></p>
+      <p class="text-sm text-gray-600">Login by: <span class="text-gray-500">{{loginType}}</span></p>
+    </div>
+  </div>
+</mat-menu>
+
+
+<!--* site selector popover -->
+<mat-menu #siteSelector class="mt-2" xPosition="before">
+  <div class="p-2 bg-gray-300 text-gray-600 -mt-2">Select a site</div>
+  <div class="p-2 flex flex-col gap-1">
+    @for (site of sites; track site.idSite) {
+    <button (click)="selectSite(site)" [value]="site.idSite"
+      class="text-gray-700 hover:bg-gray-200 px-4 py-2 rounded-lg transition-all" [class]="
+        site.idSite === siteSelected()?.id ? 'bg-gray-300 hover:bg-gray-300' : ''
+      " matRipple>
+      {{ site.name }}
+    </button>
+    }
+  </div>
+</mat-menu>
+
+<!--* application popover -->
+<mat-menu #popAplication class="mt-1">
+  <div class="p-2 bg-gray-300 text-gray-600 -mt-2">Application information</div>
+  <div class="p-2">
+    <div class="flex flex-col">
+      <span class="text-blue-600">{{ applicationConfig.applicationName }}</span>
+      <span>v: {{ applicationConfig.applicationVersion }}</span>
+    </div>
+    <div class="flex flex-col">
+      <span class="text-blue-600">Master Page</span>
+      <span>
+        v:
+        {{ applicationConfig.masterPageVersionApp }}
+      </span>
+    </div>
+  </div>
+</mat-menu>

@@ -1,0 +1,57 @@
+.loadingmodal {
+  .modal .modal-dialog:after,
+  .panel.panel-danger .panel-footer:after,
+  .panel.panel-gray .panel-footer:after,
+  .panel.panel-gray-dark .panel-footer:after,
+  .panel.panel-gray-darker .panel-footer:after,
+  .panel.panel-gray-light .panel-footer:after,
+  .panel.panel-info .panel-footer:after,
+  .panel.panel-success .panel-footer:after,
+  .panel.panel-warning .panel-footer:after {
+    position: unset;
+  }
+}
+
+.modal-header {
+  background: #505760;
+  color: white;
+  height: 50%;
+}
+
+.text-muted {
+  color: #6c757d !important;
+}
+
+small {
+  font-size: 80%;
+  font-weight: 400;
+}
+
+.modal-title {
+  font-size: 20px;
+}
+
+.or:before,
+.or:after {
+  background-color: rgb(218, 218, 218);
+  content: "";
+  display: inline-block;
+  height: 1px;
+  position: relative;
+  vertical-align: middle;
+  width: 40%;
+}
+
+.or span {
+  color: rgb(180, 180, 180);
+}
+
+.or:before {
+  right: 0.5em;
+  margin-left: -50%;
+}
+
+.or:after {
+  left: 0.5em;
+  margin-right: -50%;
+}
