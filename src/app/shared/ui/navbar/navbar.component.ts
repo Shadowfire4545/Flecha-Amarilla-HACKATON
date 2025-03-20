@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, effect, HostListener, inject, OnInit, signal } from '@angular/core';
 import { AuthService } from '../../data-access/auth/auth.service';
 import {
   faGear,
@@ -8,6 +8,8 @@ import {
   faUser,
   IconDefinition,
   faAngleDown,
+  faCheck,
+  faSearch,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -17,10 +19,9 @@ import { Constants } from '../../utils/constants';
 import { MatRippleModule } from '@angular/material/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { Menu, Site } from '../../utils/interfaces/auth.interface';
+import { Site } from '../../utils/interfaces/auth.interface';
 import { NavbarService } from '../../data-access/navbar.service';
-import { injectQuery } from '@tanstack/angular-query-experimental';
-import { lastValueFrom } from 'rxjs';
+import { dropdownAnimation } from '../../utils/animations';
 
 @Component({
   selector: 'navbar',
@@ -34,6 +35,7 @@ import { lastValueFrom } from 'rxjs';
     MatFormFieldModule,
   ],
   templateUrl: './navbar.component.html',
+  animations: [dropdownAnimation]
 })
 export class NavbarComponent implements OnInit {
   private navbarService = inject(NavbarService);
@@ -45,6 +47,8 @@ export class NavbarComponent implements OnInit {
   public faPowerOff = faPowerOff;
   public faBars = faBars;
   public faArrowDown = faAngleDown;
+  public faCheck = faCheck;
+  public faSearch = faSearch;
 
   // Application configuration
   public applicationConfig: ApplicationConfig = {
@@ -64,11 +68,35 @@ export class NavbarComponent implements OnInit {
   // User image
   public userImage = this.navbarService.userImage;
 
-  // Signal to send the selected site and project
   public siteSelected = this.navbarService.siteSelected;
 
   // Menu items
   public menu = this.navbarService.menu;
+
+  public showSites = false;
+  public showUserMenu = false;
+  public showAppMenu = false;
+
+  public toggleSites(event: Event) {
+    event.stopPropagation();
+    this.showAppMenu = false;
+    this.showUserMenu = false;
+    this.showSites = !this.showSites;
+  }
+
+  public toggleUserMenu(event: Event) {
+    event.stopPropagation();
+    this.showAppMenu = false;
+    this.showSites = false;
+    this.showUserMenu = !this.showUserMenu;
+  }
+
+  public toggleAppMenu(event: Event) {
+    event.stopPropagation();
+    this.showUserMenu = false;
+    this.showSites = false;
+    this.showAppMenu = !this.showAppMenu;
+  }
 
   public selectSite(site: Site) {
     this.siteSelected.set({
@@ -96,11 +124,11 @@ export class NavbarComponent implements OnInit {
       menu.classList.remove('invisible');
       menu.classList.remove('w-0');
       menu.classList.add('visible');
-      menu.classList.add('w-1/2');
+      menu.classList.add('w-2/3');
       this.displayMenu = true;
     } else {
       menu?.classList.remove('visible');
-      menu?.classList.remove('w-1/2');
+      menu?.classList.remove('w-2/3');
       menu?.classList.add('invisible');
       menu?.classList.add('w-0');
       this.displayMenu = false;
@@ -109,5 +137,19 @@ export class NavbarComponent implements OnInit {
 
   logout() {
     this.navbarService.logout();
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.sites-container')) {
+      this.showSites = false;
+    }
+    if (!target.closest('.user-menu-container')) {
+      this.showUserMenu = false;
+    }
+    if (!target.closest('.app-menu-container')) {
+      this.showAppMenu = false;
+    }
   }
 }

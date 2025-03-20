@@ -1,11 +1,10 @@
 import { effect, inject, Injectable, signal } from '@angular/core';
 import { IconDefinition } from '@fortawesome/angular-fontawesome';
 import { AuthService } from './auth/auth.service';
-import { injectQuery, injectQueryClient, QueryClient } from '@tanstack/angular-query-experimental';
+import { injectQuery, QueryClient } from '@tanstack/angular-query-experimental';
 import { lastValueFrom, Observable } from 'rxjs';
-import { Auth, GeneralResponse, Menu } from '../utils/interfaces/auth.interface';
+import { GeneralResponse, Menu, Profile } from '../utils/interfaces/auth.interface';
 import { HttpClient } from '@angular/common/http';
-import { faHome, faGear, faUser, faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import { ToastService } from './toast.service';
 import { environment } from '../../../environments/environment';
 
@@ -21,8 +20,11 @@ export class NavbarService {
   public BASE_API = environment.BASE_API;
 
   public siteSelected = signal<{ id: number, name: string } | null>(null);
+
   public menu = signal<{ id: number; name: string; idFatherMenu: string | null, link: string, icon?: IconDefinition }[]>([]);
   public userImage = signal<string | null>(null);
+  public profiles = signal<Profile[]>([]);
+  public isAdmin = signal(false);
 
   public user = this.authService.getAuthStorage()?.user;
   public sites = this.authService.getAuthStorage()?.sites;
@@ -33,8 +35,8 @@ export class NavbarService {
   constructor() {
     // Create effect to update menu when menus.data changes
     effect(() => {
-      if (this.menus.data()) {
-        const mappedMenu = this.menus.data()?.map(m => ({
+      if (this.menusProfilesAndProjects.data()) {
+        const mappedMenu = this.menusProfilesAndProjects.data()?.menus?.map(m => ({
           id: m.idMenu,
           name: m.name,
           link: m.link,
@@ -43,6 +45,7 @@ export class NavbarService {
         })) || [];
 
         this.menu.set(mappedMenu);
+        this.profiles.set(this.menusProfilesAndProjects.data()?.profiles || []);
       }
     });
 
@@ -61,21 +64,30 @@ export class NavbarService {
         }
       }
     });
+
+    effect(() => {
+      if (this.profiles().some(p => p.name === "Admin" || p.name === "Master")) {
+        this.isAdmin.set(true);
+      }
+    })
   }
 
   // Get menu options
-  public menus = injectQuery(() => ({
-    queryKey: ['menuOptions', this.siteSelected()?.name],
+  public menusProfilesAndProjects = injectQuery(() => ({
+    queryKey: ['getMenuPofilesAndProjects', this.siteSelected()?.name],
     queryFn: async () => {
       const res = await lastValueFrom(this.getMenuOptions()).catch((err) => {
         this.toastService.error("Failed to get menu", err.error.message);
+        return null;
       });
-      return res?.data || [];
+      if (res?.data) {
+        return res.data;
+      }
+      return { projects: [], menus: [], profiles: [] };
     },
     enabled: this.siteSelected !== null,
-    refetchOnWindowFocus: false,
     retry(failureCount) {
-      return failureCount < 0;
+      return failureCount < 1;
     },
   }));
 
@@ -101,21 +113,21 @@ export class NavbarService {
     this.userImage.set(null);
     this.menu.set([]);
     this.siteSelected.set(null);
-    
+
     // Invalidate and remove queries from cache
     this.queryClient.removeQueries({ queryKey: ['userImage'] });
     this.queryClient.removeQueries({ queryKey: ['menuOptions'] });
-    
+
     // Clear storage and logout
     this.authService.logout();
   }
 
-  private getMenuOptions(): Observable<GeneralResponse<Menu[]>> {
-    return this.http.get<GeneralResponse<Menu[]>>(`${this.BASE_API}/menu`, { params: { plant: this.siteSelected()?.name! } });
+  private getMenuOptions(): Observable<GeneralResponse<{ menus: Menu[], profiles: Profile[] }>> {
+    return this.http.get<GeneralResponse<{ menus: Menu[], profiles: Profile[] }>>(`${this.BASE_API}/menu-and-profiles`, { params: { plant: this.siteSelected()?.name! } });
   }
 
   private getUserImage() {
-    return this.http.get<GeneralResponse<Blob>>(`${this.BASE_API}/user/getImageUser`, { params: { employee: this.user?.employeeNumber! } });  
+    return this.http.get<GeneralResponse<Blob>>(`${this.BASE_API}/user/get-image-user`, { params: { employee: this.user?.employeeNumber! } });
   }
 
   // Function to add icons to the menu

@@ -1,12 +1,12 @@
 {
-  "name": "my-app",
+  "name": "BasicTemplate",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "ng": "node_modules/@angular/cli/bin/ng.js",
+    "start": "node_modules/@angular/cli/bin/ng.js serve",
+    "build": "node_modules/@angular/cli/bin/ng.js build -c production --base-href /$(node -p \"require('./package.json').name\")/ ",
+    "watch": "node_modules/@angular/cli/bin/ng.js build --watch --configuration development",
+    "test": "node_modules/@angular/cli/bin/ng.js test"
   },
   "private": true,
   "dependencies": {
