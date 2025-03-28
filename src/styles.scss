@@ -16,6 +16,11 @@ body {
         ));
 }
 
+.p-popover::before,
+.p-popover::after {
+    display: none !important;
+}
+
 ::-webkit-scrollbar {
     width: .3%;
     height: 5px;

@@ -25,9 +25,12 @@
     "@fortawesome/free-regular-svg-icons": "^6.7.1",
     "@fortawesome/free-solid-svg-icons": "^6.7.1",
     "@ngx-loading-bar/router": "^7.0.0",
+    "@primeng/themes": "^19.0.10",
     "@tanstack/angular-query-experimental": "^5.62.16",
     "ngx-toastr": "^19.0.0",
+    "primeng": "^19.0.10",
     "rxjs": "~7.8.0",
+    "tailwindcss-primeui": "^0.5.1",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
   },
@@ -43,7 +46,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "postcss": "^8.4.49",
+    "postcss": "^8.5.3",
     "tailwindcss": "^3.4.17",
     "typescript": "~5.6.2"
   }
