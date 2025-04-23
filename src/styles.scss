@@ -1,19 +1,12 @@
 @use 'ngx-toastr/toastr';
-@use '@angular/material' as mat;
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-    background-color: #ebeff4 !important;
+    background-color: #F2F2F2 !important;
     font-family: Arial, Helvetica, sans-serif;
-}
-
-// Customize the entire app. Change :root to your selector if you want to scope the styles.
-:root {
-    @include mat.progress-spinner-overrides((active-indicator-color: #ff6262,
-        ));
 }
 
 .p-popover::before,
@@ -40,11 +33,11 @@ body {
 ::-webkit-scrollbar-thumb:hover {
     /* background: linear-gradient(to right top, #0088ff, #00b5ff, #00d7fd, #00f1a3, #5bff00);
     background: linear-gradient(to right top, #fb3656, #ff5545, #ff7134, #ff8d23, #ffa711);  */
-    background: red;
+    background: #FFC756;
 }
 
 ::-webkit-scrollbar-thumb:active {
-    background: red;
+    background: #FFC756;
 }
 
 ::-webkit-scrollbar-track {
@@ -64,3 +57,13 @@ body {
 ::-webkit-scrollbar-corner {
     background: transparent;
 }
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1rem;
+    padding-right: 2.5rem !important;
+  }  

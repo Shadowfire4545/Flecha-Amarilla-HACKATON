@@ -1,0 +1,11 @@
+<div class="xl:w-1/2 m-auto mt-4 mb-8">
+    @if (step() === 1) {
+        <factura-form (nextStep)="step.set(step() + 1)" />
+    }
+    @if (step() === 2) {
+        <datos-fiscales-form (nextStep)="step.set(step() + 1)"/>
+    }
+    @if (step() === 3) {
+        <confirmar-datos/>
+    }
+</div>

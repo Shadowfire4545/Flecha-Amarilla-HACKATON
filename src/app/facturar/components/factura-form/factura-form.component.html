@@ -1,0 +1,76 @@
+<form class="space-y-6">
+    <div class="space-y-2">
+      <label for="rfc" class="block font-bold text-main-text ml-2">RFC</label>
+      <input
+        id="rfc"
+        pInputText
+        [(ngModel)]="rfc"
+        name="rfc"
+        placeholder="Escriba su RFC ..."
+        class="w-full !text-main-text placeholder:!text-description-text !py-2 !px-4 !border-2 !border-transparent !transition-all !rounded-2xl !bg-background-secondary focus:!border-primary hover:!bg-background-secondary/70 focus:!bg-background-secondary/60"
+      />
+    </div>
+
+    <div class="space-y-2 relative">
+      <label class="block font-bold text-main-text ml-2">Tipo de factura</label>
+    
+      <div
+        class="w-full bg-background-secondary text-main-text rounded-2xl py-2.5 px-4 cursor-pointer"
+        (click)="toggleDropdown()"
+      >
+        {{ selectedInvoiceType?.name || 'Seleccionar tipo de factura' }}
+      </div>
+
+      <ul
+        *ngIf="dropdownOpen"
+        class="absolute z-10 mt-1 w-full bg-background-secondary p-2 rounded-2xl shadow-md max-h-60 overflow-y-auto"
+      >
+        <li
+          *ngFor="let type of invoiceTypes"
+          (click)="selectInvoiceType(type)"
+          class="px-4 mt-0.5 py-2 cursor-pointer text-main-text hover:bg-gray-100 rounded-xl transition-all"
+        >
+          {{ type.name }}
+        </li>
+      </ul>
+    </div>    
+    <div *ngIf="selectedInvoiceTypeValidation()">
+      <div class="space-y-2">
+        <label for="token" class="block font-bold text-main-text ml-2">Token del ticket</label>
+        <input
+          id="token"
+          pInputText
+          [(ngModel)]="token"
+          name="token"
+          placeholder="Escriba el token..."
+          class="w-full !text-main-text placeholder:!text-description-text !py-2 !px-4 !border-2 !border-transparent !transition-all !rounded-2xl !bg-background-secondary focus:!border-primary hover:!bg-background-secondary/70 focus:!bg-background-secondary/60"
+        />
+      </div>
+    </div>
+    
+    <div *ngIf="selectedInvoiceType?.code === 'ALI'">
+      <div class="space-y-2">
+        <label for="token" class="block font-bold text-main-text ml-2">Fecha y hora</label>
+        <input
+          id="token"
+          pInputText
+          [(ngModel)]="token"
+          name="token"
+          placeholder="Selecciona la fecha y hora..."
+          class="w-full !text-main-text placeholder:!text-description-text !py-2 !px-4 !border-2 !border-transparent !transition-all !rounded-2xl !bg-background-secondary focus:!border-primary hover:!bg-background-secondary/70 focus:!bg-background-secondary/60"
+        />
+      </div>
+    </div>
+
+    <div class="flex justify-end" *ngIf="selectedInvoiceTypeValidation()">
+      <button 
+        (click)="avanzar()"
+        type="button"
+        [disabled]="!rfc || !token || !selectedInvoiceType"
+      class="text-center w-1/6 bg-primary text-main-text font-normal text-md rounded-2xl py-2 cursor-pointer hover:bg-primary/80 transition-all">
+        Siguiente
+      </button>
+    </div>
+    
+    
+  </form>

@@ -1,0 +1,121 @@
+<div class="xl:w-3/4 m-auto">
+    <label class="w-full text-main-text text-lg lg:text-xl 2xl:text-3xl font-bold ml-1">Datos Fiscales</label>
+    <form class="space-y-6 mt-4">
+        <div class="space-y-2">
+            <label for="rfc" class="block font-bold text-main-text ml-2">RFC</label>
+            <input
+            id="rfc"
+            pInputText
+            [(ngModel)]="rfc"
+            name="rfc"
+            placeholder="Escriba su RFC ..."
+            class="w-full !text-main-text placeholder:!text-description-text !py-2 !px-4 !border-2 !border-transparent !transition-all !rounded-2xl !bg-background-secondary focus:!border-primary hover:!bg-background-secondary/70 focus:!bg-background-secondary/60"
+            />
+        </div>
+        <div class="space-y-2">
+            <label for="rfc" class="block font-bold text-main-text ml-2">Nombre</label>
+            <input
+            id="rfc"
+            pInputText
+            [(ngModel)]="rfc"
+            name="rfc"
+            placeholder="Escriba su nombre..."
+            class="w-full !text-main-text placeholder:!text-description-text !py-2 !px-4 !border-2 !border-transparent !transition-all !rounded-2xl !bg-background-secondary focus:!border-primary hover:!bg-background-secondary/70 focus:!bg-background-secondary/60"
+            />
+        </div>
+        <div class="space-y-2">
+            <label for="rfc" class="block font-bold text-main-text ml-2">Direccion</label>
+            <input
+            id="rfc"
+            pInputText
+            [(ngModel)]="rfc"
+            name="rfc"
+            placeholder="Escriba su direccion..."
+            class="w-full !text-main-text placeholder:!text-description-text !py-2 !px-4 !border-2 !border-transparent !transition-all !rounded-2xl !bg-background-secondary focus:!border-primary hover:!bg-background-secondary/70 focus:!bg-background-secondary/60"
+            />
+        </div>
+
+        <div class="flex w-full">
+            <div class="space-y-2 w-1/2 mr-3">
+                <label for="rfc" class="block font-bold text-main-text ml-2">Codigo Postal</label>
+                <input
+                id="rfc"
+                pInputText
+                [(ngModel)]="rfc"
+                name="rfc"
+                placeholder="Escriba su RFC ..."
+                class="w-full !text-main-text placeholder:!text-description-text !py-2 !px-4 !border-2 !border-transparent !transition-all !rounded-2xl !bg-background-secondary focus:!border-primary hover:!bg-background-secondary/70 focus:!bg-background-secondary/60"
+                />
+            </div>
+            <div class="space-y-2 w-1/2 ml-3">
+                <label for="rfc" class="block font-bold text-main-text ml-2">Razon Social</label>
+                <input
+                id="rfc"
+                pInputText
+                [(ngModel)]="rfc"
+                name="rfc"
+                placeholder="Escriba su RFC ..."
+                class="w-full !text-main-text placeholder:!text-description-text !py-2 !px-4 !border-2 !border-transparent !transition-all !rounded-2xl !bg-background-secondary focus:!border-primary hover:!bg-background-secondary/70 focus:!bg-background-secondary/60"
+                />
+            </div>
+        </div>
+
+        <div class="space-y-2 relative">
+            <label class="block font-bold text-main-text ml-2">Regimen Fiscal</label>
+          
+            <div
+              class="w-full bg-background-secondary text-main-text rounded-2xl py-2.5 px-4 cursor-pointer"
+              (click)="toggleDropdownRegimen()"
+            >
+              {{ selectedRegimenFiscal || 'Seleccionar razon social' }}
+            </div>
+      
+            <ul
+              *ngIf="dropdownRegimen"
+              class="absolute z-10 mt-1 w-full bg-background-secondary p-2 rounded-2xl shadow-md max-h-60 overflow-y-auto"
+            >
+              <li
+                *ngFor="let type of regimenFiscal"
+                (click)="selectRegimenFiscal(type)"
+                class="px-4 mt-0.5 py-2 cursor-pointer text-main-text hover:bg-gray-100 rounded-xl transition-all"
+              >
+                {{ type }}
+              </li>
+            </ul>
+          </div>    
+
+          <div class="space-y-2 relative">
+            <label class="block font-bold text-main-text ml-2">Uso de CFDI</label>
+          
+            <div
+              class="w-full bg-background-secondary text-main-text rounded-2xl py-2.5 px-4 cursor-pointer"
+              (click)="toggleDropdownCFDI()"
+            >
+              {{ selectedUsoCFDI || 'Seleccionar el uso del CFDI' }}
+            </div>
+      
+            <ul
+              *ngIf="dropdownCFDI"
+              class="absolute z-10 mt-1 w-full bg-background-secondary p-2 rounded-2xl shadow-md max-h-60 overflow-y-auto"
+            >
+              <li
+                *ngFor="let type of usoCFDI"
+                (click)="selectUsoCFDI(type)"
+                class="px-4 mt-0.5 py-2 cursor-pointer text-main-text hover:bg-gray-100 rounded-xl transition-all"
+              >
+                {{ type }}
+              </li>
+            </ul>
+          </div>  
+
+          <div class="flex justify-end">
+            <button 
+              (click)="avanzar()"
+              type="button"
+            class="text-center w-1/6 bg-primary text-main-text font-normal text-md rounded-2xl py-2 cursor-pointer hover:bg-primary/80 transition-all">
+              Siguiente
+            </button>
+          </div>
+        
+    </form>
+</div>

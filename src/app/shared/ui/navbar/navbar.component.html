@@ -1,214 +1,24 @@
-<nav class="bg-[#f8f9fa] h-16 flex items-center justify-between px-10">
-  <!-- Logo and mobile menu button container -->
-  <div class="flex items-center justify-between w-full xl:w-auto">
-    <!-- Logo of the application -->
-    <div class="relative app-menu-container">
-      <img (click)="appPanel.toggle($event)" src="sanmina/sanmina-100x56.png"
-        class="h-14 object-cover cursor-pointer pt-1 xl:pt-0" alt="" />
-
-      <!-- PrimeNG overlay panel for app information -->
-      <p-popover #appPanel [dismissable]="true"
-        [style]="{background: 'transparent', border: 'none', boxShadow: 'none', content: 'none'}"
-        styleClass="bg-transparent border-0 shadow-none">
-        <ng-template pTemplate="content">
-          <div class="w-72 bg-white rounded-2xl shadow-xl">
-            <div class="rounded-t-2xl px-4 h-9 w-full text-sm text-white font-semibold bg-[#505760] items-center flex">
-              Informacion de la aplicacion
-            </div>
-            <div class="p-2">
-              <div class="flex flex-col">
-                <span class="text-blue-600">{{ applicationConfig.applicationName }}</span>
-                <span class="text-gray-800">v: {{ applicationConfig.applicationVersion }}</span>
-              </div>
-              <div class="flex flex-col">
-                <span class="text-blue-600">Master Page</span>
-                <span class="text-gray-800">v: {{ applicationConfig.masterPageVersionApp }}</span>
-              </div>
-            </div>
-          </div>
-        </ng-template>
-      </p-popover>
-    </div>
-
-    <!-- Mobile menu button - now next to the logo -->
-    <button (click)="toggleMenu()" pRipple
-      class="text-gray-500 text-xl xl:hidden transition-all hover:text-gray-600 hover:bg-gray-500 hover:bg-opacity-10 hover:rounded-lg p-2 px-4">
-      <fa-icon [icon]="faBars" />
+<nav class="flex justify-center pt-5">
+  <div class="inline-flex rounded-2xl shadow-md bg-background-secondary py-2 px-6">
+    <button class="text-unselected font-bold text-lg">
+      <
     </button>
   </div>
 
-  <!-- Desktop menu - aligned to the right -->
-  <div class="hidden xl:flex items-center justify-end xl:space-x-2 flex-grow">
-    <div class="flex flex-row gap-2">
-      @for (item of menu(); track item.id) {
-      @if (item.idFatherMenu === null) {
-      <div class="relative group">
-        <button pRipple [routerLink]="item.link" routerLinkActive="bg-gray-500 bg-opacity-20 rounded-lg text-gray-600"
-          class="text-gray-500 w-full hover:text-gray-600 px-4 py-2 transition-all hover:bg-gray-500 hover:bg-opacity-10 hover:rounded-lg space-x-2 flex items-center">
-          @if (item.icon) {
-          <fa-icon [icon]="item.icon" />
-          }
-          <span>{{ item.name }}</span>
-        </button>
-
-        <!-- Add invisible bridge to maintain hover -->
-        <div class="absolute w-full h-2 bg-transparent"></div>
-
-        <!-- Dropdown menu with hover bridge -->
-        <div
-          class="absolute mt-2 left-0 w-48 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-150 bg-white shadow-lg rounded-lg z-10">
-          @for (child of menu(); track child.id) {
-          @if (child.idFatherMenu?.toString() === item.id.toString()) {
-          <button pRipple [routerLink]="child.link" routerLinkActive="bg-gray-500 bg-opacity-20"
-            class="w-full text-left text-gray-500 hover:text-gray-600 px-4 py-2 transition-all hover:bg-gray-500 hover:bg-opacity-10 space-x-2 flex items-center rounded-lg">
-            @if (child.icon) {
-            <fa-icon [icon]="child.icon" />
-            }
-            <span>{{ child.name }}</span>
-          </button>
-          }
-          }
-        </div>
-      </div>
-      }
-      }
-    </div>
-
-    <!-- User information -->
-    <div class="flex items-center xl:space-x-4 xl:pl-4">
-      <div class="flex space-x-2 items-center justify-center">
-        <div class="relative user-menu-container">
-          <img (click)="userPanel.toggle($event)" [src]="user?.googleImage ? user?.googleImage : userImage()"
-            class="h-9 w-9 cursor-pointer rounded-full" />
-
-          <!-- PrimeNG overlay panel for user information -->
-          <p-popover #userPanel [dismissable]="true"
-            [style]="{background: 'transparent', border: 'none', boxShadow: 'none'}"
-            styleClass="bg-transparent border-0 shadow-none">
-            <ng-template pTemplate="content">
-              <div class="w-80 bg-white rounded-2xl shadow-xl">
-                <div
-                  class="rounded-t-2xl px-4 h-9 w-full text-sm text-white font-semibold bg-[#505760] items-center flex">
-                  Usuario
-                </div>
-                <div class="p-2 flex space-x-4 items-center">
-                  <img [src]="user?.googleImage ? user?.googleImage : userImage()" alt="User profile"
-                    class="h-16 w-16 rounded-full border-2 border-[#e54a4a]" />
-                  <div>
-                    <p class="text-sm text-gray-600">Nombre: <span class="text-gray-500">{{user?.name + " " +
-                        user?.lastName}}</span></p>
-                    <p class="text-sm text-gray-600">Numero de empleado: <span
-                        class="text-gray-500">{{user?.employeeNumber}}</span></p>
-                    <p class="text-sm text-gray-600">Sesion inciada por: <span
-                        class="text-gray-500">{{loginType}}</span></p>
-                  </div>
-                </div>
-              </div>
-            </ng-template>
-          </p-popover>
-        </div>
-
-        <span class="text-gray-500 uppercase text-xs">{{user?.userName}}</span>
-      </div>
-      <button (click)="logout()" pRipple
-        class="text-white hover:bg-[#ff6262]/80 bg-[#ff6262] border-b-4 border border-[#e54a4a] transition-all rounded-full h-10 w-10 inline-block">
-        <fa-icon [icon]="faPowerOff" />
-      </button>
-    </div>
+  <div class="inline-flex rounded-2xl shadow-md bg-background-secondary py-2.5 px-8 space-x-5" role="tablist">
+    <button
+      routerLink="/facturar"  
+      routerLinkActive="bg-selected text-main-text font-bold border" 
+      class="w-32 py-2 rounded-xl text-unselected hover:bg-selected transition-all focus:outline-none"
+    >
+      Facturar
+    </button>
+    <button
+      routerLink="/buscar"   
+      routerLinkActive="bg-selected text-main-text font-bold border" 
+      class="w-32 py-2 rounded-xl text-unselected hover:bg-selected transition-all focus:outline-none"
+    >
+      Buscar
+    </button>
   </div>
-
-  <p-drawer [(visible)]="sidebarVisible" position="right" [style]="{width:'70%', backgroundColor:'white'}"
-    class="bg-gray-300">
-    <ng-template pTemplate="header">
-      <div class="flex justify-between items-center px-4 text-sm py-2 rounded-lg bg-[#505760] text-white">
-        <span>Menú</span>
-      </div>
-    </ng-template>
-
-    <div class="flex flex-col p-4 space-y-4">
-      <!-- Mobile user info -->
-      <div class="flex items-center space-x-4 p-3 bg-gray-200 rounded-lg">
-        <img [src]="user?.googleImage ? user?.googleImage : userImage()"
-          class="h-12 w-12 rounded-full border-2 border-[#e54a4a]" />
-        <div>
-          <p class="font-medium text-gray-600">{{user?.name + " " + user?.lastName}}</p>
-          <p class="text-xs text-gray-500">{{user?.userName}}</p>
-        </div>
-      </div>
-
-      <!-- Mobile menu -->
-      <div class="flex flex-col">
-        @for (item of menu(); track item.id) {
-        @if (item.idFatherMenu === null) {
-        <div class="mb-2">
-          <button pRipple [routerLink]="item.link" routerLinkActive="bg-gray-200 text-gray-600"
-            (click)="onMobileMenuItemClick()"
-            class="text-gray-500 w-full rounded-lg px-4 py-3 text-left flex items-center space-x-3">
-            @if (item.icon) {
-            <fa-icon [icon]="item.icon" />
-            }
-            <span>{{ item.name }}</span>
-          </button>
-
-          <!-- Submenu -->
-          @for (child of menu(); track child.id) {
-          @if (child.idFatherMenu?.toString() === item.id.toString()) {
-          <button pRipple [routerLink]="child.link" routerLinkActive="bg-gray-200 text-gray-600"
-            (click)="onMobileMenuItemClick()"
-            class="text-gray-500 w-full pl-10 pr-4 py-2 rounded-lg text-left flex items-center space-x-3">
-            @if (child.icon) {
-            <fa-icon [icon]="child.icon" />
-            }
-            <span>{{ child.name }}</span>
-          </button>
-          }
-          }
-        </div>
-        }
-        }
-      </div>
-
-      <!-- Close session button in mobile -->
-      <button (click)="logout()" pRipple
-        class="text-white hover:bg-[#ff6262]/80 bg-[#ff6262] border-b-4 border border-[#e54a4a] transition-all rounded-lg h-12 flex items-center justify-center space-x-2">
-        <fa-icon [icon]="faPowerOff" />
-        <span>Cerrar sesion</span>
-      </button>
-    </div>
-  </p-drawer>
 </nav>
-
-<!-- Sites and projects selector -->
-<div
-  class="bg-[#505760] h-8 shadow flex justify-end items-center px-1 xl:px-12 space-x-5 border-t-[3px] border-red-600">
-  <div class="relative sites-container">
-    <button pRipple (click)="sitesPanel.toggle($event)" class="flex items-center space-x-1 text-gray-200 text-sm">
-      <span>{{ siteSelected()?.name }}</span>
-      <fa-icon [icon]="faArrowDown" />
-    </button>
-
-    <!-- PrimeNG overlay panel for sites -->
-    <p-popover #sitesPanel [dismissable]="true"
-      [style]="{background: 'transparent', border: 'none', boxShadow: 'none'}"
-      styleClass="bg-transparent border-0 shadow-none">
-      <ng-template pTemplate="content">
-        <div class="w-48 bg-white rounded-2xl shadow-xl">
-          <div class="rounded-t-2xl px-4 h-9 w-full text-sm text-white font-semibold bg-[#505760] items-center flex">
-            Sitios
-          </div>
-          <div class="max-h-96 overflow-auto">
-            @for (site of sites; track site.idSite) {
-            <button pRipple (click)="selectSite(site)"
-              class="w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-100 last:rounded-b-2xl flex items-center justify-between h-10">
-              <span class="text-sm">{{site.name}}</span>
-              @if (siteSelected()?.id === site.idSite) {
-              <fa-icon [icon]="faCheck" class="text-[#ff6262]" />
-              }
-            </button>
-            }
-          </div>
-        </div>
-      </ng-template>
-    </p-popover>
-  </div>
-</div>

@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './shared/ui/navbar/navbar.component';
-import { AuthService } from './shared/data-access/auth/auth.service';
 import { NgxLoadingBar } from '@ngx-loading-bar/core';
 import { FooterComponent } from './shared/ui/footer/footer.component';
+import { Constants } from './shared/utils/constants';
 
 @Component({
   selector: 'app-root',
@@ -12,11 +12,5 @@ import { FooterComponent } from './shared/ui/footer/footer.component';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'client';
-
-  private authService = inject(AuthService);
-
-  get isLoggedIn() {
-    return this.authService.isLoggedIn();
-  }
+  title = Constants.applicationName;
 }

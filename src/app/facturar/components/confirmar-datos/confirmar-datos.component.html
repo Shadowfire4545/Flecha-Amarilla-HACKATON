@@ -1,0 +1,105 @@
+<div class="xl:w-3/4 m-auto">
+    <h1 class="text-3xl font-bold text-main-text py-4 mb-2 ml-0.5">Confirmar Datos</h1>
+    <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-2">
+            <label for="rfc" class="block font-bold text-main-text ml-2">RFC</label>
+            <input
+                disabled="true"
+                id="rfc"
+                pInputText
+                [(ngModel)]="rfc"
+                name="rfc"
+                placeholder="RFC del cliente"
+                class="w-full !text-main-text placeholder:!text-description-text !py-2 !px-4 !border-2 !border-transparent !transition-all !rounded-2xl !bg-background-secondary"
+            />
+        </div>
+
+        <div class="flex w-full">
+            <div class="flex flex-col gap-2 w-1/2 mr-3">
+                <label for="rfc" class="block font-bold text-main-text ml-2">Razon Social</label>
+                <input
+                    disabled="true"
+                    id="rfc"
+                    pInputText
+                    [(ngModel)]="rfc"
+                    name="rfc"
+                    placeholder="Razon Social"
+                    class="w-full !text-main-text placeholder:!text-description-text !py-2 !px-4 !border-2 !border-transparent !transition-all !rounded-2xl !bg-background-secondary"
+                />
+            </div>
+            <div class="flex flex-col gap-2 w-1/2 ml-3">
+                <label for="rfc" class="block font-bold text-main-text ml-2">Regimen Fiscal</label>
+                <input
+                    disabled="true"
+                    id="rfc"
+                    pInputText
+                    [(ngModel)]="rfc"
+                    name="rfc"
+                    placeholder="Regimen Fiscal"
+                    class="w-full !text-main-text placeholder:!text-description-text !py-2 !px-4 !border-2 !border-transparent !transition-all !rounded-2xl !bg-background-secondary"
+                />
+            </div>
+        </div>
+
+
+        <div class="flex flex-col gap-2">
+            <label for="nombre" class="block font-bold text-main-text ml-2">Nombre</label>
+            <input
+                id="nombre"
+                disabled="true"
+                pInputText
+                [(ngModel)]="nombre"
+                name="nombre"
+                placeholder="Nombre del cliente"
+                class="w-full !text-main-text placeholder:!text-description-text !py-2 !px-4 !border-2 !border-transparent !transition-all !rounded-2xl !bg-background-secondary"
+            />
+        </div>
+        <div class="flex flex-col gap-2">
+            <label for="direccion" class="block font-bold text-main-text ml-2">Dirección</label>
+            <input
+                id="direccion"
+                disabled="true"
+                pInputText
+                [(ngModel)]="direccion"
+                name="direccion"
+                placeholder="Dirección del cliente"
+                class="w-full !text-main-text placeholder:!text-description-text !py-2 !px-4 !border-2 !border-transparent !transition-all !rounded-2xl !bg-background-secondary"
+            />
+        </div>
+
+        <div class="flex w-full">
+            <div class="flex flex-col gap-2 w-1/2 mr-3">
+                <label for="rfc" class="block font-bold text-main-text ml-2">Codigo Postal</label>
+                <input
+                    disabled="true"
+                    id="rfc"
+                    pInputText
+                    [(ngModel)]="rfc"
+                    name="rfc"
+                    placeholder="C.P."
+                    class="w-full !text-main-text placeholder:!text-description-text !py-2 !px-4 !border-2 !border-transparent !transition-all !rounded-2xl !bg-background-secondary"
+                />
+            </div>
+            <div class="flex flex-col gap-2 w-1/2 ml-3">
+                <label for="rfc" class="block font-bold text-main-text ml-2">Importe</label>
+                <input
+                    disabled="true"
+                    id="rfc"
+                    pInputText
+                    [(ngModel)]="rfc"
+                    name="rfc"
+                    placeholder="$ 0.00"
+                    class="w-full !text-main-text placeholder:!text-description-text !py-2 !px-4 !border-2 !border-transparent !transition-all !rounded-2xl !bg-background-secondary"
+                />
+            </div>
+        </div>
+        <div class="flex justify-end mt-1">
+            <button 
+                (click)="avanzar()"
+                type="button"
+                class="text-center w-1/6 bg-primary text-main-text font-normal text-md rounded-2xl py-2 cursor-pointer hover:bg-primary/80 transition-all">
+                Facturar
+            </button>
+          </div>
+    </div>
+</div>
