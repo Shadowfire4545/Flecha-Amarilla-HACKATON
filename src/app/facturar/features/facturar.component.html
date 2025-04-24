@@ -1,11 +1,11 @@
-<div class="xl:w-1/2 m-auto mt-4 mb-8">
-    @if (step() === 1) {
-        <factura-form (nextStep)="step.set(step() + 1)" />
+<div class="xl:w-1/2 m-auto w-full flex flex-col justify-center min-h-screen">
+    @if (page() === 1) {
+        <factura-form  />
     }
-    @if (step() === 2) {
-        <datos-fiscales-form (nextStep)="step.set(step() + 1)"/>
+    @if (page() === 2) {
+        <datos-fiscales-form />
     }
-    @if (step() === 3) {
+    @if (page() === 3) {
         <confirmar-datos/>
     }
 </div>

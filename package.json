@@ -26,6 +26,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.7.1",
     "@ngx-loading-bar/router": "^7.0.0",
     "@primeng/themes": "^19.0.10",
+    "@tanstack/angular-query-experimental": "^5.62.16",
     "ngx-toastr": "^19.0.0",
     "primeng": "^19.0.10",
     "rxjs": "~7.8.0",
