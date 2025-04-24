@@ -53,7 +53,7 @@ export class UserService {
         const formData = new FormData();
         formData.append('archivo', file);
     
-        return this.http.post<GeneralResponse<any>>(
+        return this.http.post<GeneralResponse<User>>(
           `${this.BASE_API}/csf/upload`,
           formData
         );
