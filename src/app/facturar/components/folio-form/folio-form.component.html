@@ -14,9 +14,15 @@
     <div class="flex justify-end w-full mt-4">
       <button 
         (click)="avanzar()"
+        [disabled]="loadingFolio()"	
         type="button"
-        class="text-center w-1/6 bg-primary text-main-text font-normal text-md rounded-2xl py-2 cursor-pointer hover:bg-primary/80 transition-all">
-        Siguiente
+        class="flex text-center disabled:bg-primary/60 justify-center space-x-2 w-1/6 bg-primary text-main-text font-normal text-md rounded-2xl py-2 cursor-pointer hover:bg-primary/80 transition-all">
+        @if (loadingFolio()) {
+          <mat-spinner diameter="25" color="#ff6262" />
+          <span>Cargando...</span>
+          } @else {
+          <span>Siguiente</span>
+          }
       </button>
     </div>
     

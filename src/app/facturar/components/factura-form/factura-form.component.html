@@ -4,7 +4,7 @@
   <label for="rfc" class="block font-bold text-main-text ml-2">RFC</label>
   <input id="rfc" maxlength="13" pInputText (input)="updateRfc($event)" [value]="rfc()" name="rfc"
     placeholder="Escriba su RFC ..."
-    class="w-full !text-main-text placeholder:!text-description-text !py-4 !px-4 !border-2 !border-transparent !transition-all !rounded-2xl !bg-background-secondary focus:!border-primary hover:!bg-background-secondary/70 focus:!bg-background-secondary/60" />
+    class="w-full !text-main-text placeholder:!text-description-text !py-2 !px-4 !border-2 !border-transparent !transition-all !rounded-2xl !bg-background-secondary focus:!border-primary hover:!bg-background-secondary/70 focus:!bg-background-secondary/60" />
 </div>
 
 
@@ -17,7 +17,7 @@
       #fileInput accept=".pdf" />
 
     <div (click)="fileInput.click()" (dragover)="$event.preventDefault()" (dragleave)="$event.preventDefault()"
-      (drop)="onFileDrop($event)" class="flex flex-col items-center justify-center w-full p-6 border-2 border-dashed rounded-2xl cursor-pointer transition-all duration-300 
+      (drop)="onFileDrop($event)" class="flex flex-col items-center justify-center w-full p-5 border-2 border-dashed rounded-2xl cursor-pointer transition-all duration-300 
       text-main-text !bg-background-secondary hover:!bg-background-secondary/70"
       [ngClass]="{'border-primary bg-background-secondary/60': csfFile() !== null, 'border-red-500': fileError, 'border-gray-300': csfFile() === null && !fileError}">
 

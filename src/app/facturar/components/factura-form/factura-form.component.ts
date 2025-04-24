@@ -47,6 +47,7 @@ export class FacturaFormComponent {
 
   loadingUser = signal(false);
   rfc = signal('');
+  loadingFile = signal(false);
   csfFile = signal<File | null>(null);
   fileError = false;
 
@@ -55,6 +56,30 @@ export class FacturaFormComponent {
   constructor() {
     effect(() => {
       this.rfc.set(this.rfc().toUpperCase())
+    })
+    effect(async () => {
+      if (this.csfFile()) {
+        this.loadingFile.set(true);
+        this.userService.getFileData(this.csfFile()!).subscribe((res) => {
+          if (res.success) {
+            this.userService.getUser(this.rfc()).subscribe((res) => {
+              if (!res.success && res.data === null) {
+                this.stepService.setStep(3);
+            } else {
+              this.userService.user.set(res.data);
+              this.userService.companyName.set(res.data.companyname)
+              this.userService.taxRegim.set(res.data.taxregime)
+              this.userService.zip.set(res.data.zip)
+              this.userService.email.set(res.data.email)
+              this.stepService.setStep(3);
+            }
+            })
+          } else {
+            this.fileError = true;
+            this.csfFile.set(null);
+          }
+        })
+      }
     })
   }
 
@@ -78,8 +103,6 @@ export class FacturaFormComponent {
   }
   
   async avanzar() {
-    this.stepService.setStep(3);
-    /*
     this.userService.rfcToFetch.set(this.rfc());
     const headers = new HttpHeaders({
       'ngrok-skip-browser-warning': 'true',
@@ -89,12 +112,16 @@ export class FacturaFormComponent {
     this.userService.getUser(this.rfc(), headers).subscribe((res) => {
         this.loadingUser.set(false);
         if (!res.success && res.data === null) {
-          this.stepService.setStep(1);
+          this.stepService.setStep(3);
       } else {
         this.userService.user.set(res.data);
+        this.userService.companyName.set(res.data.companyname)
+        this.userService.taxRegim.set(res.data.taxregime)
+        this.userService.zip.set(res.data.zip)
+        this.userService.email.set(res.data.email)
+        this.stepService.setStep(3);
       }
     })
-      */
   }
 
   updateRfc(event: Event) {

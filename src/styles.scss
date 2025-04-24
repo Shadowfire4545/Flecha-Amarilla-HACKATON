@@ -1,5 +1,5 @@
 @use 'ngx-toastr/toastr';
-
+@use '@angular/material' as mat;
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,6 +7,10 @@
 body {
     background-color: #F2F2F2 !important;
     font-family: Arial, Helvetica, sans-serif;
+}
+
+:root {
+    @include mat.progress-spinner-overrides((active-indicator-color: #FFC756,));
 }
 
 .p-popover::before,
