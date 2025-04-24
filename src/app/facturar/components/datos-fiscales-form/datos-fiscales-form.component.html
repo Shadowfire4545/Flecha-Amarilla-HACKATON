@@ -1,60 +1,38 @@
-<div class="xl:w-3/4 m-auto">
+<div class="flex flex-col w-1/2 h-screen items-center m-auto justify-center gap-4">
     <label class="w-full text-main-text text-lg lg:text-xl 2xl:text-3xl font-bold ml-1">Datos Fiscales</label>
-    <form class="space-y-6 mt-4">
+    <form class="space-y-4 w-full">
         <div class="space-y-2">
             <label for="rfc" class="block font-bold text-main-text ml-2">RFC</label>
             <input
             id="rfc"
             pInputText
+            disabled="true"
             [(ngModel)]="rfc"
             name="rfc"
             placeholder="Escriba su RFC ..."
-            class="w-full !text-main-text placeholder:!text-description-text !py-2 !px-4 !border-2 !border-transparent !transition-all !rounded-2xl !bg-background-secondary focus:!border-primary hover:!bg-background-secondary/70 focus:!bg-background-secondary/60"
+            class="w-full !text-main-text placeholder:!text-description-text !py-2 !px-4 !border-2 !border-transparent !transition-all !rounded-2xl !bg-background-secondary focus:!border-primary focus:!bg-background-secondary/60"
             />
         </div>
-        <div class="space-y-2">
-            <label for="rfc" class="block font-bold text-main-text ml-2">Nombre</label>
-            <input
-            id="rfc"
-            pInputText
-            [(ngModel)]="rfc"
-            name="rfc"
-            placeholder="Escriba su nombre..."
-            class="w-full !text-main-text placeholder:!text-description-text !py-2 !px-4 !border-2 !border-transparent !transition-all !rounded-2xl !bg-background-secondary focus:!border-primary hover:!bg-background-secondary/70 focus:!bg-background-secondary/60"
-            />
-        </div>
-        <div class="space-y-2">
-            <label for="rfc" class="block font-bold text-main-text ml-2">Direccion</label>
-            <input
-            id="rfc"
-            pInputText
-            [(ngModel)]="rfc"
-            name="rfc"
-            placeholder="Escriba su direccion..."
-            class="w-full !text-main-text placeholder:!text-description-text !py-2 !px-4 !border-2 !border-transparent !transition-all !rounded-2xl !bg-background-secondary focus:!border-primary hover:!bg-background-secondary/70 focus:!bg-background-secondary/60"
-            />
-        </div>
-
         <div class="flex w-full">
             <div class="space-y-2 w-1/2 mr-3">
-                <label for="rfc" class="block font-bold text-main-text ml-2">Codigo Postal</label>
+                <label for="cp" class="block font-bold text-main-text ml-2">Codigo Postal</label>
                 <input
-                id="rfc"
+                id="cp"
                 pInputText
-                [(ngModel)]="rfc"
-                name="rfc"
-                placeholder="Escriba su RFC ..."
+                [(ngModel)]="cp"
+                name="cp"
+                placeholder="Escriba su codigo postal..."
                 class="w-full !text-main-text placeholder:!text-description-text !py-2 !px-4 !border-2 !border-transparent !transition-all !rounded-2xl !bg-background-secondary focus:!border-primary hover:!bg-background-secondary/70 focus:!bg-background-secondary/60"
                 />
             </div>
             <div class="space-y-2 w-1/2 ml-3">
-                <label for="rfc" class="block font-bold text-main-text ml-2">Razon Social</label>
+                <label for="razonSocial" class="block font-bold text-main-text ml-2">Razon Social</label>
                 <input
-                id="rfc"
+                id="razonSocial"
                 pInputText
-                [(ngModel)]="rfc"
-                name="rfc"
-                placeholder="Escriba su RFC ..."
+                [(ngModel)]="razonSocial"
+                name="razonSocial"
+                placeholder="Escriba su Razon Social..."
                 class="w-full !text-main-text placeholder:!text-description-text !py-2 !px-4 !border-2 !border-transparent !transition-all !rounded-2xl !bg-background-secondary focus:!border-primary hover:!bg-background-secondary/70 focus:!bg-background-secondary/60"
                 />
             </div>
@@ -96,7 +74,7 @@
       
             <ul
               *ngIf="dropdownCFDI"
-              class="absolute z-10 mt-1 w-full bg-background-secondary p-2 rounded-2xl shadow-md max-h-60 overflow-y-auto"
+              class="absolute z-10 mt-1 w-full bg-background-secondary p-2 rounded-2xl shadow-md max-h-36 overflow-y-auto"
             >
               <li
                 *ngFor="let type of usoCFDI"

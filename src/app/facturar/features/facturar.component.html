@@ -1,11 +1,21 @@
-<div class="xl:w-1/2 m-auto mt-4 mb-8">
+<div class="w-full m-auto mb-8 overflow-y-hidden">
     @if (step() === 1) {
-        <factura-form (nextStep)="step.set(step() + 1)" />
+        <folio-form/>
     }
     @if (step() === 2) {
-        <datos-fiscales-form (nextStep)="step.set(step() + 1)"/>
+        <navbar/>
+        <factura-form/>
     }
     @if (step() === 3) {
+        <navbar/>
+        <datos-fiscales-form/>
+    }
+    @if (step() === 4) {
+        <navbar/>
         <confirmar-datos/>
+    }
+    @if (step() === 5) {
+        <navbar/>
+        <descargar-factura/>
     }
 </div>

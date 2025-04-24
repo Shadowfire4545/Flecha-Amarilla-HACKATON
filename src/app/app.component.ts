@@ -7,7 +7,7 @@ import { Constants } from './shared/utils/constants';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavbarComponent, NgxLoadingBar, FooterComponent],
+  imports: [RouterOutlet, NgxLoadingBar, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

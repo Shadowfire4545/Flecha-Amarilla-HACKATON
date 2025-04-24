@@ -1,76 +1,68 @@
-<form class="space-y-6">
-    <div class="space-y-2">
-      <label for="rfc" class="block font-bold text-main-text ml-2">RFC</label>
-      <input
-        id="rfc"
-        pInputText
-        [(ngModel)]="rfc"
-        name="rfc"
-        placeholder="Escriba su RFC ..."
-        class="w-full !text-main-text placeholder:!text-description-text !py-2 !px-4 !border-2 !border-transparent !transition-all !rounded-2xl !bg-background-secondary focus:!border-primary hover:!bg-background-secondary/70 focus:!bg-background-secondary/60"
-      />
-    </div>
+<form class="flex flex-col m-auto h-screen justify-center w-full px-4 lg:w-1/2">
 
-    <div class="space-y-2 relative">
-      <label class="block font-bold text-main-text ml-2">Tipo de factura</label>
-    
-      <div
-        class="w-full bg-background-secondary text-main-text rounded-2xl py-2.5 px-4 cursor-pointer"
-        (click)="toggleDropdown()"
-      >
-        {{ selectedInvoiceType?.name || 'Seleccionar tipo de factura' }}
-      </div>
+<div class="space-y-2">
+  <label for="rfc" class="block font-bold text-main-text ml-2">RFC</label>
+  <input id="rfc" maxlength="13" pInputText (input)="updateRfc($event)" [value]="rfc()" name="rfc"
+    placeholder="Escriba su RFC ..."
+    class="w-full !text-main-text placeholder:!text-description-text !py-4 !px-4 !border-2 !border-transparent !transition-all !rounded-2xl !bg-background-secondary focus:!border-primary hover:!bg-background-secondary/70 focus:!bg-background-secondary/60" />
+</div>
 
-      <ul
-        *ngIf="dropdownOpen"
-        class="absolute z-10 mt-1 w-full bg-background-secondary p-2 rounded-2xl shadow-md max-h-60 overflow-y-auto"
-      >
-        <li
-          *ngFor="let type of invoiceTypes"
-          (click)="selectInvoiceType(type)"
-          class="px-4 mt-0.5 py-2 cursor-pointer text-main-text hover:bg-gray-100 rounded-xl transition-all"
-        >
-          {{ type.name }}
-        </li>
-      </ul>
-    </div>    
-    <div *ngIf="selectedInvoiceTypeValidation()">
-      <div class="space-y-2">
-        <label for="token" class="block font-bold text-main-text ml-2">Token del ticket</label>
-        <input
-          id="token"
-          pInputText
-          [(ngModel)]="token"
-          name="token"
-          placeholder="Escriba el token..."
-          class="w-full !text-main-text placeholder:!text-description-text !py-2 !px-4 !border-2 !border-transparent !transition-all !rounded-2xl !bg-background-secondary focus:!border-primary hover:!bg-background-secondary/70 focus:!bg-background-secondary/60"
-        />
-      </div>
-    </div>
-    
-    <div *ngIf="selectedInvoiceType?.code === 'ALI'">
-      <div class="space-y-2">
-        <label for="token" class="block font-bold text-main-text ml-2">Fecha y hora</label>
-        <input
-          id="token"
-          pInputText
-          [(ngModel)]="token"
-          name="token"
-          placeholder="Selecciona la fecha y hora..."
-          class="w-full !text-main-text placeholder:!text-description-text !py-2 !px-4 !border-2 !border-transparent !transition-all !rounded-2xl !bg-background-secondary focus:!border-primary hover:!bg-background-secondary/70 focus:!bg-background-secondary/60"
-        />
-      </div>
-    </div>
 
-    <div class="flex justify-end" *ngIf="selectedInvoiceTypeValidation()">
-      <button 
-        (click)="avanzar()"
-        type="button"
-        [disabled]="!rfc || !token || !selectedInvoiceType"
-      class="text-center w-1/6 bg-primary text-main-text font-normal text-md rounded-2xl py-2 cursor-pointer hover:bg-primary/80 transition-all">
-        Siguiente
-      </button>
+@if (rfc().length < 12) {
+  <p-divider type="dashed" />
+<div class="space-y-2">
+  <label for="csf" class="block font-bold text-main-text ml-2">Subir CSF</label>
+  <div class="relative">
+    <input type="file" id="csf" name="csf" [(ngModel)]="csfFile" class="hidden" (change)="onFileSelect($event)"
+      #fileInput accept=".pdf" />
+
+    <div (click)="fileInput.click()" (dragover)="$event.preventDefault()" (dragleave)="$event.preventDefault()"
+      (drop)="onFileDrop($event)" class="flex flex-col items-center justify-center w-full p-6 border-2 border-dashed rounded-2xl cursor-pointer transition-all duration-300 
+      text-main-text !bg-background-secondary hover:!bg-background-secondary/70"
+      [ngClass]="{'border-primary bg-background-secondary/60': csfFile() !== null, 'border-red-500': fileError, 'border-gray-300': csfFile() === null && !fileError}">
+
+      @if(csfFile() === null) {
+      <div class="flex flex-col items-center text-center">
+        <i class="pi pi-cloud-upload text-4xl mb-3" [ngClass]="fileError ? 'text-red-500' : 'text-primary'"></i>
+        <p class="mb-2 text-sm">Arrastra y suelta tu archivo aquí o</p>
+        <span class="px-4 py-2 rounded-xl bg-primary text-main-text hover:bg-primary/80 transition-all">Seleccionar
+          archivo</span>
+        <p class="mt-2 text-xs" [ngClass]="fileError ? 'text-red-500 font-medium' : 'text-description-text'">
+          {{fileError ? 'Solo se permiten archivos PDF' : 'Formatos aceptados: .pdf'}}
+        </p>
+      </div>
+      } @else {
+      <div class="flex items-center justify-between w-full">
+        <div class="flex items-center">
+          <i class="pi pi-file-pdf text-2xl mr-3 text-primary"></i>
+          <div class="text-left">
+            <p class="font-medium truncate max-w-xs">{{ csfFile()?.name }}</p>
+            <p class="text-xs text-description-text">{{ formatFileSize(csfFile()?.size) }}</p>
+          </div>
+        </div>
+        <button type="button" (click)="$event.stopPropagation(); clearFile()"
+          class="text-description-text hover:text-red-500">
+          <i class="pi pi-times-circle"></i>
+        </button>
+      </div>
+      }
     </div>
-    
-    
-  </form>
+  </div>
+</div>
+}
+
+@if(rfc().length === 13 || rfc().length === 12) {
+  <div class="flex justify-end mt-4">
+    <button type="button" (click)="avanzar()" [disabled]="!rfc() || loadingUser()"
+      class="w-1/6 bg-primary text-main-text font-normal text-md rounded-2xl py-3 disabled:bg-primary/50 hover:bg-primary/80 transition-all flex items-center justify-center space-x-2">
+      @if (loadingUser()) {
+      <mat-spinner diameter="25" color="#ff6262" />
+      <span>Cargando...</span>
+      } @else {
+      <fa-icon [icon]="faChevronRight" />
+      <span>Siguiente</span>
+      }
+    </button>
+  </div>
+  }
+</form>

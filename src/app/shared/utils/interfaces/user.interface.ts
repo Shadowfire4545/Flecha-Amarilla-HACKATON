@@ -7,6 +7,7 @@ export interface User {
     nombre: string;
     direccion: string;
     regimenFiscal: string;
+    razonSocial: string;
     usoCFDI: string;
     email: string;
 }
